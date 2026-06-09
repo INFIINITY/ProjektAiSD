@@ -1,13 +1,11 @@
-#include <iostream>
-#include <cstdint>
+#include "library.h"
 #include <omp.h>
 
-int
-main() {
-    uint32_t k = 2;
+extern "C" {
+
+uint64_t*
+policz_rozklad(const uint32_t* S, uint32_t k) {
     uint32_t N = 1 << k; 
-    
-    uint32_t S[] = {3, 1, 0, 2};
     
     uint64_t* tabela_wynikow = new uint64_t[N * N];
     for(uint32_t i = 0; i < N * N; ++i) {
@@ -25,13 +23,14 @@ main() {
         }
     }
     
-    for(uint32_t i = 0; i < N; ++i) {
-        for(uint32_t j = 0; j < N; ++j) {
-            std::cout << tabela_wynikow[i * N + j] << " ";
-        }
-        std::cout << "\n";
-    }
-    
-    delete [] tabela_wynikow;
-    return 0;
+    return tabela_wynikow;
 }
+
+void
+usun_tablice(uint64_t* arr) {
+    if (arr != nullptr) {
+        delete [] arr;
+    }
+}
+
+};

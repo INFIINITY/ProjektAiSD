@@ -1,15 +1,14 @@
 CXX=g++
-CXXFLAGS=-O2 -Wall
-OBJ=main.o
-TARGET=app
+CXXFLAGS=-O2 -Wall -fopenmp -fPIC
+LDFLAGS=-shared
+TARGET=library.dll
 
-.o:.cpp
-	$(CXX) $(CXXFLAGS) -c $<
+all: $(TARGET)
 
-all: $(OBJ)
-	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJ)
+$(TARGET): library.cpp library.h
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $(TARGET) library.cpp
 
 clean:
-	rm -f $(OBJ) $(TARGET)
+	rm -f $(TARGET)
 
 .PHONY: all clean
