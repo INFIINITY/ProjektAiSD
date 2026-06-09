@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstdint>
+#include <omp.h>
 
 int
 main() {
@@ -13,10 +14,13 @@ main() {
         tabela_wynikow[i] = 0;
     }
     
+    #pragma omp parallel for
     for(uint32_t a = 0; a < N; ++a) {
         for(uint32_t b = 0; b < N; ++b) {
             uint32_t przesuniecie_x = (a + b) % N;
             uint32_t przesuniecie_y = (S[a] + S[b]) % N;
+            
+            #pragma omp atomic
             tabela_wynikow[przesuniecie_x * N + przesuniecie_y]++;
         }
     }
